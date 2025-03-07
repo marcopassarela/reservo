@@ -90,8 +90,8 @@ function initializeEvents() {
 // Função auxiliar para clique no login
 function handleLoginClick(e) {
     if (localStorage.getItem('isLoggedIn') !== 'true') {
-        console.log('Redirecionando para login.html');
-        window.location.href = 'login.html';
+        console.log('Redirecionando para index.html');
+        window.location.href = 'index.html';
     } else {
         console.log('Já logado, clique ignorado');
         e.preventDefault();
