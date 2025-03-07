@@ -1,4 +1,4 @@
-// Função para atualizar o estado do login
+// Função para atualizar o estado do login (usada no index.html)
 function updateLoginState() {
     const loginBtn = document.getElementById('loginBtn');
     const loginText = document.getElementById('loginText');
@@ -36,7 +36,7 @@ function updateLoginState() {
     }
 }
 
-// Função para logout
+// Função para logout (usada no index.html)
 function handleLogout(e) {
     e.preventDefault();
     console.log('Logout clicado');
@@ -45,7 +45,7 @@ function handleLogout(e) {
     updateLoginState();
 }
 
-// Função para clique no botão de login
+// Função para clique no botão de login (usada no index.html)
 function handleLoginClick(e) {
     if (localStorage.getItem('isLoggedIn') !== 'true') {
         console.log('Redirecionando para login.html');
@@ -56,19 +56,48 @@ function handleLoginClick(e) {
     }
 }
 
-// Inicializa os eventos
+// Função para lidar com a submissão do formulário de login (usada no login.html)
+function handleLoginSubmit(e) {
+    e.preventDefault();
+    
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const errorMessage = document.getElementById('errorMessage');
+
+    if (!usernameInput || !passwordInput) return; // Sai se os elementos não existem
+
+    const username = usernameInput.value;
+    const password = passwordInput.value;
+
+    console.log('Tentativa de login:', username, password);
+
+    if (username === 'admin' && password === '1234') {
+        console.log('Login bem-sucedido, salvando dados');
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('username', username);
+        window.location.href = 'index.html'; // Redireciona para index.html
+    } else {
+        console.log('Login falhou');
+        if (errorMessage) errorMessage.style.display = 'block';
+    }
+}
+
+// Inicializa os eventos dependendo da página
 function initializeEvents() {
     const loginBtn = document.getElementById('loginBtn');
     const mobileLoginBtn = document.getElementById('mobileLoginBtn');
     const sairBtn = document.querySelector('.btn svg.svg-sair')?.parentElement;
     const sairMobileBtn = document.querySelector('#menu-mobile .sair');
+    const loginForm = document.getElementById('loginForm');
 
     console.log('Inicializando eventos...');
     console.log('loginBtn encontrado:', !!loginBtn);
     console.log('mobileLoginBtn encontrado:', !!mobileLoginBtn);
     console.log('sairBtn encontrado:', !!sairBtn);
     console.log('sairMobileBtn encontrado:', !!sairMobileBtn);
+    console.log('loginForm encontrado:', !!loginForm);
 
+    // Eventos para index.html
     if (loginBtn) {
         loginBtn.removeEventListener('click', handleLoginClick);
         loginBtn.addEventListener('click', handleLoginClick);
@@ -96,31 +125,19 @@ function initializeEvents() {
     } else {
         console.warn('Botão "Sair" do mobile não encontrado, ignorando evento.');
     }
+
+    // Evento para login.html
+    if (loginForm) {
+        loginForm.removeEventListener('submit', handleLoginSubmit);
+        loginForm.addEventListener('submit', handleLoginSubmit);
+    } else {
+        console.warn('Formulário de login não encontrado, ignorando evento.');
+    }
 }
 
 // Executa ao carregar a página
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Página carregada, verificando estado do login');
-    updateLoginState();
-    initializeEvents();
-});
-
-
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    console.log('Tentativa de login:', username, password);
-
-    if (username === 'admin' && password === '1234') {
-        console.log('Login bem-sucedido, salvando dados');
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('username', username);
-        window.location.href = 'index.html'; // Redireciona para index.html
-    } else {
-        console.log('Login falhou');
-        document.getElementById('errorMessage').style.display = 'block';
-    }
+    updateLoginState(); // Atualiza o estado apenas se os elementos existirem (index.html)
+    initializeEvents(); // Inicializa eventos para a página atual
 });
