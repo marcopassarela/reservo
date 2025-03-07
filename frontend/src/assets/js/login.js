@@ -3,76 +3,104 @@ function updateLoginState() {
     const loginBtn = document.getElementById('loginBtn'); // Desktop
     const loginText = document.getElementById('loginText'); // Texto no desktop
     const mobileLoginBtn = document.getElementById('mobileLoginBtn'); // Mobile
-    const sairBtn = document.querySelector('.btn svg.svg-sair').parentElement; // Botão sair desktop
+    const sairBtn = document.querySelector('.btn svg.svg-sair')?.parentElement; // Botão sair desktop
     const sairMobileBtn = document.querySelector('#menu-mobile .sair'); // Botão sair mobile
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     const username = localStorage.getItem('username');
 
+    // Logs para depuração
     console.log('Atualizando estado do login...');
     console.log('isLoggedIn:', isLoggedIn);
     console.log('username:', username);
+    console.log('loginBtn:', loginBtn);
+    console.log('loginText:', loginText);
+    console.log('mobileLoginBtn:', mobileLoginBtn);
+    console.log('sairBtn:', sairBtn);
+    console.log('sairMobileBtn:', sairMobileBtn);
 
+    // Atualiza os botões com base no estado de login
     if (isLoggedIn && username) {
         console.log('Usuário logado, atualizando para:', username);
-        // Desktop
-        loginText.textContent = username;
-        loginBtn.removeAttribute('href');
-        // Mobile
-        mobileLoginBtn.textContent = username;
-        mobileLoginBtn.removeAttribute('href');
+        if (loginText) loginText.textContent = username;
+        if (loginBtn) loginBtn.removeAttribute('href');
+        if (mobileLoginBtn) {
+            mobileLoginBtn.textContent = username;
+            mobileLoginBtn.removeAttribute('href');
+        }
     } else {
         console.log('Usuário não logado, mostrando "Login"');
-        // Desktop
-        loginText.textContent = 'Login';
-        loginBtn.setAttribute('href', 'login.html');
-        // Mobile
-        mobileLoginBtn.textContent = 'Login';
-        mobileLoginBtn.setAttribute('href', 'login.html');
+        if (loginText) loginText.textContent = 'Login';
+        if (loginBtn) loginBtn.setAttribute('href', 'login.html');
+        if (mobileLoginBtn) {
+            mobileLoginBtn.textContent = 'Login';
+            mobileLoginBtn.setAttribute('href', 'login.html');
+        }
     }
-
-    // Evento de logout para desktop
-    sairBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Logout clicado (desktop)');
-        localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('username');
-        updateLoginState();
-    });
-
-    // Evento de logout para mobile
-    sairMobileBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Logout clicado (mobile)');
-        localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('username');
-        updateLoginState();
-    });
 }
 
-// Evento de clique no botão de login (desktop)
-document.getElementById('loginBtn').addEventListener('click', function(e) {
-    if (localStorage.getItem('isLoggedIn') !== 'true') {
-        console.log('Redirecionando para login.html (desktop)');
-        window.location.href = 'login.html';
-    } else {
-        console.log('Já logado, clique ignorado (desktop)');
-        e.preventDefault();
-    }
-});
+// Função para logout
+function handleLogout(e) {
+    e.preventDefault();
+    console.log('Logout clicado');
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('username');
+    updateLoginState();
+}
 
-// Evento de clique no botão de login (mobile)
-document.getElementById('mobileLoginBtn').addEventListener('click', function(e) {
+// Função para clique no botão de login
+function handleLoginClick(e) {
     if (localStorage.getItem('isLoggedIn') !== 'true') {
-        console.log('Redirecionando para login.html (mobile)');
+        console.log('Redirecionando para login.html');
         window.location.href = 'login.html';
     } else {
-        console.log('Já logado, clique ignorado (mobile)');
+        console.log('Já logado, clique ignorado');
         e.preventDefault();
     }
-});
+}
+
+// Inicializa os eventos
+function initializeEvents() {
+    const loginBtn = document.getElementById('loginBtn');
+    const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+    const sairBtn = document.querySelector('.btn svg.svg-sair')?.parentElement;
+    const sairMobileBtn = document.querySelector('#menu-mobile .sair');
+
+    // Eventos de login (desktop)
+    if (loginBtn) {
+        loginBtn.removeEventListener('click', handleLoginClick); // Remove evento anterior
+        loginBtn.addEventListener('click', handleLoginClick);
+    } else {
+        console.error('Botão "Login" do desktop não encontrado!');
+    }
+
+    // Eventos de login (mobile)
+    if (mobileLoginBtn) {
+        mobileLoginBtn.removeEventListener('click', handleLoginClick); // Remove evento anterior
+        mobileLoginBtn.addEventListener('click', handleLoginClick);
+    } else {
+        console.error('Botão "Login" do mobile não encontrado!');
+    }
+
+    // Eventos de logout (desktop)
+    if (sairBtn) {
+        sairBtn.removeEventListener('click', handleLogout); // Remove evento anterior
+        sairBtn.addEventListener('click', handleLogout);
+    } else {
+        console.error('Botão "Sair" do desktop não encontrado!');
+    }
+
+    // Eventos de logout (mobile)
+    if (sairMobileBtn) {
+        sairMobileBtn.removeEventListener('click', handleLogout); // Remove evento anterior
+        sairMobileBtn.addEventListener('click', handleLogout);
+    } else {
+        console.error('Botão "Sair" do mobile não encontrado!');
+    }
+}
 
 // Executa ao carregar a página
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Página carregada, verificando estado do login');
     updateLoginState();
+    initializeEvents();
 });
