@@ -64,7 +64,7 @@ function handleLoginSubmit(e) {
     const passwordInput = document.getElementById('password');
     const errorMessage = document.getElementById('errorMessage');
 
-    if (!usernameInput || !passwordInput) return; // Sai se os elementos não existem
+    if (!usernameInput || !passwordInput) return;
 
     const username = usernameInput.value;
     const password = passwordInput.value;
@@ -75,7 +75,7 @@ function handleLoginSubmit(e) {
         console.log('Login bem-sucedido, salvando dados');
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('username', username);
-        window.location.href = 'index.html'; // Redireciona para index.html
+        window.location.href = 'index.html';
     } else {
         console.log('Login falhou');
         if (errorMessage) errorMessage.style.display = 'block';
@@ -89,6 +89,7 @@ function initializeEvents() {
     const sairBtn = document.querySelector('.btn svg.svg-sair')?.parentElement;
     const sairMobileBtn = document.querySelector('#menu-mobile .sair');
     const loginForm = document.getElementById('loginForm');
+    const isLoginPage = window.location.pathname.includes('login.html');
 
     console.log('Inicializando eventos...');
     console.log('loginBtn encontrado:', !!loginBtn);
@@ -96,8 +97,8 @@ function initializeEvents() {
     console.log('sairBtn encontrado:', !!sairBtn);
     console.log('sairMobileBtn encontrado:', !!sairMobileBtn);
     console.log('loginForm encontrado:', !!loginForm);
+    console.log('isLoginPage:', isLoginPage);
 
-    // Eventos para index.html
     if (loginBtn) {
         loginBtn.removeEventListener('click', handleLoginClick);
         loginBtn.addEventListener('click', handleLoginClick);
@@ -126,18 +127,17 @@ function initializeEvents() {
         console.warn('Botão "Sair" do mobile não encontrado, ignorando evento.');
     }
 
-    // Evento para login.html
     if (loginForm) {
         loginForm.removeEventListener('submit', handleLoginSubmit);
         loginForm.addEventListener('submit', handleLoginSubmit);
-    } else {
-        console.warn('Formulário de login não encontrado, ignorando evento.');
+    } else if (isLoginPage) {
+        console.error('Formulário de login não encontrado em login.html, verifique o HTML!');
     }
 }
 
 // Executa ao carregar a página
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Página carregada, verificando estado do login');
-    updateLoginState(); // Atualiza o estado apenas se os elementos existirem (index.html)
-    initializeEvents(); // Inicializa eventos para a página atual
+    updateLoginState();
+    initializeEvents();
 });
