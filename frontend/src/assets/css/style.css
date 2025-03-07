@@ -1,0 +1,592 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+
+header {
+    width: 100%;
+    height: auto;
+    list-style: none;
+}
+
+#menu {
+    display: flex;
+    flex-direction: column;
+    width: 210px;
+    height: 100vh;
+    gap: 20px;
+    border-right: 1px solid rgba(0, 0, 0, 0.123);
+    position: fixed;
+    display: flex;
+    align-items: center;
+}
+.title {
+    align-self: flex-start;
+    text-align: left;
+    position: relative;
+    left: 10%;
+    margin-bottom: 15px;
+    font-size: 17px;
+    color: black;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif; 
+}
+.inicio {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 25px;
+    text-decoration: none;
+    list-style: none;
+    width: 90%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.123);
+}
+.services {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-decoration: none;
+    list-style: none;
+    width: 90%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.123);
+}
+.options {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-decoration: none;
+    list-style: none;
+    width: 90%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.123);
+}
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinha os itens à esquerda */
+    padding: 5px 10px;
+    gap: 25px;
+    border: 1px solid rgba(0, 0, 0, 0.397);
+    width: 130px;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: "Poppins", serif;
+    color: black;
+    
+    border: transparent;
+    transition: 0.3s ease-in-out;
+    margin-bottom: 10px;
+}
+.btn-inicio {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinha os itens à esquerda */
+    padding: 5px 10px;
+    gap: 25px;
+    border: 1px solid rgba(0, 0, 0, 0.397);
+    width: 130px;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: "Poppins", serif;
+    color: black;
+    background-color: #E5E5E5;
+    border: transparent;
+    transition: 0.3s ease-in-out;
+    margin-bottom: 10px;
+}
+.btn-inicio:hover {
+    background-color: #c7c7c7;
+}
+.btn:hover {
+    background-color: #c7c7c7;
+}
+
+.svg-menu {
+    fill: rgba(0, 0, 0, 0.651);
+    display: inline-block;
+}
+.btn-inicio:hover .svg-menu {
+    transition: .3s ease-in-out;
+    fill: rgb(0, 158, 0);
+}
+.btn:hover .svg-padrao {
+    transition: .3s ease-in-out;
+    fill: rgb(0, 158, 0);
+}
+.btn:hover .svg-login {
+    transition: .3s ease-in-out;
+    fill: rgb(0, 158, 0);
+}
+.btn:hover .svg-sair {
+    transition: .3s ease-in-out;
+    fill: red;
+}
+.btn:hover .svg-cadastro {
+    transition: .3s ease-in-out;
+    fill: rgb(0, 158, 0);
+}
+
+
+/* Ícone do menu hambúrguer */
+#hamburger-icon {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    width: 35px;
+    height: 25px;
+    justify-content: space-between;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 1001; /* Mantém o ícone acima do menu */
+}
+
+/* Barras do ícone */
+.bar {
+    width: 27px;
+    height: 4px;
+    background-color: black;
+    transition: transform 0.4s ease-in-out, background-color 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    border-radius: 3px;
+}
+
+/* Menu lateral */
+#menu-mobile {
+    position: fixed;
+    top: 0;
+    left: -100vw;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(0, 0, 0);
+    transition: 1.4s ease-in-out;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 0px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, .1), 0px 8px 16px rgba(0, 0, 0, .1);
+}
+
+/* Quando o menu estiver aberto */
+#menu-mobile.active {
+    left: 0; /* Move o menu para dentro da tela */
+}
+
+
+/* Links do menu */
+#menu-mobile a {
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    transition: 0.3s;
+    font-family: "Poppins", serif;
+}
+
+#menu-mobile a:hover {
+    background-color: #444;
+}
+
+/* Quando o menu estiver ativo */
+#menu-mobile.active {
+    left: 0;
+}
+
+/* Transformar o ícone de hambúrguer em "X" */
+#hamburger-icon.active .bar:nth-child(1) {
+    transform: translateY(10px) rotate(45deg);
+    background-color: red;
+    transition: .4s ease-in-out;
+}
+
+#hamburger-icon.active .bar:nth-child(2) {
+    opacity: 0; /* Esconde a barra do meio */
+}
+
+#hamburger-icon.active .bar:nth-child(3) {
+    transform: translateY(-11px) rotate(-45deg);
+    background-color: red;
+    transition: .4s ease-in-out;
+}
+
+/*Corpo do site */
+#content {
+    height: auto;
+    margin-left: 210px;
+}
+.banner {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    animation: fade 30s infinite;
+}
+.banner img:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.banner img:nth-child(2) {
+    animation-delay: 10s;
+}
+
+.banner img:nth-child(3) {
+    animation-delay: 20s;
+}
+
+/* Animação de fade-in e fade-out */
+@keyframes fade {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    30% { opacity: 1; }
+    40% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* Defina uma transição para todos os elementos que você deseja animar */
+.fade-in {
+    opacity: 0;
+    transition: opacity 1s ease-in-out; /* Transição suave de 1 segundo */
+}
+
+.fade-in.show {
+    opacity: 1; /* Torna visível quando a classe 'show' é adicionada */
+}
+
+.description {
+    width: 100%;
+    min-height: 160px;
+    height: auto;
+}
+.title-page {
+    position: relative;
+    left: 5%;
+    width: 30%;
+    margin-top: 20px;
+    font-family: "Sora", sans-serif;
+    font-size: 30px;
+}
+.fade-in {
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+
+.description p {
+    position: relative;
+    left: 5%;
+    width: 60%;
+    margin-top: 10px;
+    font-family: "Sora", sans-serif;
+    font-size: 14px;
+    white-space: pre-wrap; /* Quebra o texto automaticamente nas margens do parágrafo */
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 1s forwards 1s; /* Aparece com animação suave */
+}
+.fade-in.visible {
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+#agenda {
+    width: 100%;
+    height: auto;
+    background-color: #E5E5E5;
+    display: flex;
+    justify-content: center;
+    font-family: "Sora", sans-serif;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+.card {
+    padding: 10px;
+    width: 400px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+.card h1 {
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+.card p {
+    font-size: 14px;
+}
+.card2 {
+    padding: 10px;
+    width: 400px;
+    height: 300px;
+}
+.card2 h1 {
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+.card2 p {
+    font-size: 14px;
+}
+.card3 {
+    padding: 10px;
+    width: 400px;
+    height: 300px;
+}
+.card3 h1 {
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+.card3 p {
+    font-size: 14px;
+}
+.interface {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    font-family: "Sora", sans-serif;
+}
+.title-interface{
+    font-size: 30px;
+}
+
+#container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding: 15px 0px;
+}
+.aboutApp {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.box1, .box2, .box3 {
+    width: 250px;
+    height: 400px;
+    perspective: 1000px;
+}
+
+.flip-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flip-card {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d; /* Essencial para o flip */
+    position: relative;
+}
+
+.flip-card .front,
+.flip-card .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Esconde a parte de trás quando virar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    box-shadow: 0px 6px 15px 3px rgba(0,0,0,0.3);
+    transition: .4s ease-in-out;
+    font-family: "Sora", sans-serif;
+}
+
+.flip-card .front {
+    background-color: #f1f1f1;
+    color: black;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.flip-card .back {
+    background-color: #4CAF50;
+    color: white;
+    transform: rotateY(180deg);
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+/* Quando o box é clicado, aplica a rotação */
+.box1.clicked .flip-card,
+.box2.clicked .flip-card,
+.box3.clicked .flip-card {
+    transform: rotateY(180deg); /* Gira o cartão ao clicar */
+}
+
+
+
+
+/* Exibir o ícone apenas no mobile */
+@media screen and (min-width: 320px) and (max-width: 430px) {
+    #hamburger-icon {
+        display: flex;
+    }
+    #menu {
+        display: none;
+    }
+    #menu-mobile .sair {
+        color: red;
+    }
+    #content {
+        margin-left: 0px;
+    }
+    .description {
+        width: 100%;
+        height: auto;
+    }
+    .description p {
+        left: 5%;
+        width: 90%;
+        height: 240px;
+        text-align: justify;
+        hyphens: auto;
+        word-spacing: 1px;
+        color: black;
+    }
+    .title-page {
+        width: 30%;
+        left: 5%;
+    }
+    #agenda {
+        flex-wrap: wrap;
+        position: relative;
+        padding: 0;
+        margin-top: 15px;
+        justify-content: flex-start;
+    }
+    .card {
+        padding: 5px 0px;
+        height: 200px;
+        border-bottom: 1px solid black;
+        width: 90%;
+        margin: auto;
+    }
+    .card h1 {
+        position: relative;
+        left: 5%;
+        font-size: 25px;
+        width: 90%;
+        text-align: justify;
+        hyphens: auto;
+        word-spacing: 1px;
+    }
+    .card p {
+        position: relative;
+        left: 5%;
+        font-size: 14px;
+        width: 90%;
+        text-align: justify;
+        hyphens: auto;
+        word-spacing: 1px;
+    }
+    .card2 {
+        padding: 5px 0px;
+        height: 200px;
+        border-bottom: 1px solid black;
+        width: 90%;
+        margin: auto;
+    }
+    .card2 h1 {
+        position: relative;
+        left: 5%;
+        margin-top: 10px;
+        font-size: 25px;
+        width: 90%;
+        text-align: justify;
+        hyphens: auto;
+        word-spacing: 1px;
+    }
+    .card2 p {
+        position: relative;
+        left: 5%;
+        font-size: 14px;
+        width: 90%;
+        text-align: justify;
+        hyphens: auto;
+        word-spacing: 1px;
+    }
+    .card3 {
+        padding: 5px 0px;
+        height: 200px;
+        border-bottom: 1px solid black;
+        width: 90%;
+        margin: auto;
+    }
+    .card3 h1 {
+        position: relative;
+        left: 5%;
+        margin-top: 10px;
+        font-size: 25px;
+        width: 90%;
+        text-align: justify;
+        hyphens: auto;
+        word-spacing: 1px;
+    }
+    .card3 p {
+        position: relative;
+        left: 5%;
+        font-size: 14px;
+        width: 90%;
+        text-align: justify;
+        hyphens: auto;
+        word-spacing: 1px;
+    }
+    .interface {
+        flex-wrap: wrap;
+        position: relative;
+        padding: 0;
+        margin-top: 15px;
+        justify-content: flex-start;
+    }
+    .title-interface {
+        position: relative;
+        left: 5%;
+        font-size: 25px;
+        width: 90%;
+        text-align: center;
+        hyphens: auto;
+        word-spacing: 1px;
+    }
+    #container {
+        width: 100%;
+        height: auto;
+    }
+}
