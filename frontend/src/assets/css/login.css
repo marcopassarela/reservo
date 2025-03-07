@@ -4,16 +4,14 @@
     padding: 20px;
     text-align: center;
 }
-
 .login-container input {
     display: block;
     width: 100%;
     margin: 10px 0;
     padding: 8px;
 }
-
 .login-container button {
-    padding: 10px 10px;
+    padding: 10px 20px;
     background-color: #5f6368;
     color: white;
     border: none;
