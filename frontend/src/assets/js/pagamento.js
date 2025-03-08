@@ -16,8 +16,8 @@ function obterParametroURL(nome) {
 
 // Função para aplicar a máscara de CEP
 function mascararCEP(cep) {
-    cep = cep.replace(/\D/g, ""); // Remove tudo que não é número
-    if (cep.length > 8) cep = cep.slice(0, 8); // Limita a 8 dígitos
+    cep = cep.replace(/\D/g, "");
+    if (cep.length > 8) cep = cep.slice(0, 8);
     if (cep.length > 5) {
         return cep.replace(/(\d{5})(\d{1,3})/, "$1-$2");
     }
@@ -26,14 +26,14 @@ function mascararCEP(cep) {
 
 // Função para aplicar a máscara de CPF
 function mascararCPF(cpf) {
-    cpf = cpf.replace(/\D/g, ""); // Remove tudo que não é número
-    if (cpf.length > 11) cpf = cpf.slice(0, 11); // Limita a 11 dígitos
+    cpf = cpf.replace(/\D/g, "");
+    if (cpf.length > 11) cpf = cpf.slice(0, 11);
     return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
 }
 
 // Função para buscar dados do CEP usando a API ViaCEP
 function buscarCEP(cep) {
-    cep = cep.replace(/\D/g, ""); // Remove o traço e outros não-dígitos
+    cep = cep.replace(/\D/g, "");
     const cidadeInput = document.getElementById("cidade");
     const ruaInput = document.getElementById("rua");
     
@@ -74,24 +74,33 @@ function debounce(func, wait) {
     };
 }
 
-// Função para finalizar o pagamento
-function finalizarPagamento(event) {
+// Função para finalizar o cadastro/pagamento
+function finalizarFormulario(event) {
     event.preventDefault();
-    const planoSelecionado = obterParametroURL("plano") || "free"; // Pega o plano da URL
+    const planoSelecionado = obterParametroURL("plano") || "free";
     const dados = {
         nome: document.getElementById("nome").value,
         email: document.getElementById("email").value,
-        telefone: document.getElementById("telefone").value,
-        cpf: document.getElementById("cpf").value,
-        cep: document.getElementById("cep").value,
-        cidade: document.getElementById("cidade").value,
-        rua: document.getElementById("rua").value,
-        numero: document.getElementById("numero").value,
-        referencia: document.getElementById("referencia").value,
-        plano: planos[planoSelecionado].nome
+        telefone: document.getElementById("telefone").value
     };
-    console.log("Dados do pagamento:", dados);
-    alert(`Pagamento finalizado para o plano ${planos[planoSelecionado].nome}!`);
+
+    if (planoSelecionado !== "free") {
+        dados.cpf = document.getElementById("cpf").value;
+        dados.cep = document.getElementById("cep").value;
+        dados.cidade = document.getElementById("cidade").value;
+        dados.rua = document.getElementById("rua").value;
+        dados.numero = document.getElementById("numero").value;
+        dados.referencia = document.getElementById("referencia").value;
+    }
+
+    dados.plano = planos[planoSelecionado].nome;
+    console.log("Dados do formulário:", dados);
+
+    if (planoSelecionado === "free") {
+        alert("Cadastro concluído com sucesso para o plano Free!");
+    } else {
+        alert(`Pagamento finalizado para o plano ${planos[planoSelecionado].nome}!`);
+    }
 }
 
 // Configurar eventos e inicialização
@@ -102,8 +111,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const cepInput = document.getElementById("cep");
     const cpfInput = document.getElementById("cpf");
     const numeroInput = document.getElementById("numero");
-    
-    // Definir o plano selecionado com base na URL
+    const formTitle = document.getElementById("form-title");
+    const finalizarBtn = document.getElementById("finalizar-btn");
+    const pagamentoOnlyFields = document.querySelectorAll(".pagamento-only");
+
+    // Definir o plano selecionado
     if (planoURL && planos[planoURL]) {
         nomePlano.textContent = planos[planoURL].nome;
         precoPlano.textContent = planos[planoURL].preco;
@@ -112,27 +124,48 @@ document.addEventListener("DOMContentLoaded", function() {
         precoPlano.textContent = planos["free"].preco;
     }
 
+    // Ajustar formulário com base no plano
+    if (planoURL === "free") {
+        formTitle.textContent = "Dados para Cadastro";
+        finalizarBtn.textContent = "Concluir Cadastro";
+        pagamentoOnlyFields.forEach(field => {
+            field.style.display = "none"; // Oculta campos de pagamento
+            field.querySelector("input").required = false; // Remove obrigatoriedade
+        });
+    } else {
+        formTitle.textContent = "Dados para Pagamento";
+        finalizarBtn.textContent = "Finalizar Pagamento";
+        pagamentoOnlyFields.forEach(field => {
+            field.style.display = "block"; // Mostra campos de pagamento
+            field.querySelector("input").required = true; // Torna obrigatório
+        });
+    }
+
     // Máscara de CEP em tempo real
-    cepInput.addEventListener("input", function() {
-        this.value = mascararCEP(this.value);
-    });
+    if (cepInput) {
+        cepInput.addEventListener("input", function() {
+            this.value = mascararCEP(this.value);
+        });
+        const debouncedBuscarCEP = debounce(buscarCEP, 500);
+        cepInput.addEventListener("input", function() {
+            debouncedBuscarCEP(this.value);
+        });
+    }
 
     // Máscara de CPF em tempo real
-    cpfInput.addEventListener("input", function() {
-        this.value = mascararCPF(this.value);
-    });
+    if (cpfInput) {
+        cpfInput.addEventListener("input", function() {
+            this.value = mascararCPF(this.value);
+        });
+    }
 
     // Limitar número a 4 dígitos
-    numeroInput.addEventListener("input", function() {
-        this.value = this.value.replace(/\D/g, "").slice(0, 4); // Apenas números, máx 4
-    });
+    if (numeroInput) {
+        numeroInput.addEventListener("input", function() {
+            this.value = this.value.replace(/\D/g, "").slice(0, 4);
+        });
+    }
 
-    // Buscar CEP com debounce
-    const debouncedBuscarCEP = debounce(buscarCEP, 500);
-    cepInput.addEventListener("input", function() {
-        debouncedBuscarCEP(this.value);
-    });
-
-    // Finalizar pagamento
-    document.getElementById("pagamento-form").addEventListener("submit", finalizarPagamento);
+    // Finalizar formulário
+    document.getElementById("pagamento-form").addEventListener("submit", finalizarFormulario);
 });
