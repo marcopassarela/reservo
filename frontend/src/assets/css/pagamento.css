@@ -95,25 +95,30 @@ input#numero {
     color: #333;
 }
 
+.strength-bars {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+}
+
 .strength-bar {
     height: 5px;
-    width: 100%;
+    width: 33%; /* Cada barra ocupa 1/3 do espaço disponível */
     background-color: #e0e0e0;
     border-radius: 2px;
-    margin-top: 5px;
     transition: background-color 0.3s;
 }
 
-.strength-bar.weak {
-    background-color: #ff4d4d; /* Vermelho para senha fraca ou não coincidente */
+#senha-bar1, #confirmar-bar1.active {
+    background-color: #ff4d4d; /* Vermelho */
 }
 
-.strength-bar.medium {
-    background-color: #ffd700; /* Amarelo para senha mediana */
+#senha-bar2, #confirmar-bar2.active {
+    background-color: #ffd700; /* Amarelo */
 }
 
-.strength-bar.strong {
-    background-color: #4CAF50; /* Verde para senha forte ou coincidente */
+#senha-bar3, #confirmar-bar3.active {
+    background-color: #4CAF50; /* Verde */
 }
 
 .error-message {

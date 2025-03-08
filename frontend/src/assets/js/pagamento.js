@@ -83,9 +83,9 @@ function calcularForcaSenha(senha) {
     if (/[0-9]/.test(senha)) forca += 1; // Tem número
     if (/[^A-Za-z0-9]/.test(senha)) forca += 1; // Tem caractere especial
 
-    if (forca <= 2) return "weak"; // Vermelho
-    if (forca <= 4) return "medium"; // Amarelo
-    return "strong"; // Verde
+    if (forca <= 2) return "weak"; // Apenas vermelho
+    if (forca <= 4) return "medium"; // Vermelho e amarelo
+    return "strong"; // Vermelho, amarelo e verde
 }
 
 // Função para finalizar o cadastro/pagamento
@@ -142,8 +142,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const togglePasswordButtons = document.querySelectorAll(".toggle-password");
     const senhaInput = document.getElementById("senha");
     const confirmarSenhaInput = document.getElementById("confirmar-senha");
-    const senhaStrengthBar = document.getElementById("senha-strength");
-    const confirmarSenhaStrengthBar = document.getElementById("confirmar-senha-strength");
+    const senhaBar1 = document.getElementById("senha-bar1");
+    const senhaBar2 = document.getElementById("senha-bar2");
+    const senhaBar3 = document.getElementById("senha-bar3");
+    const confirmarBar1 = document.getElementById("confirmar-bar1");
+    const confirmarBar2 = document.getElementById("confirmar-bar2");
+    const confirmarBar3 = document.getElementById("confirmar-bar3");
     const confirmarSenhaError = document.getElementById("confirmar-senha-error");
 
     // Definir o plano selecionado
@@ -215,18 +219,36 @@ document.addEventListener("DOMContentLoaded", function() {
     // Atualizar força da senha em tempo real
     senhaInput.addEventListener("input", function() {
         const forca = calcularForcaSenha(this.value);
-        senhaStrengthBar.className = "strength-bar"; // Reseta classes
-        senhaStrengthBar.classList.add(forca);
+        senhaBar1.classList.remove("active");
+        senhaBar2.classList.remove("active");
+        senhaBar3.classList.remove("active");
+
+        if (this.value === "") {
+            // Sem cor se vazio
+        } else if (forca === "weak") {
+            senhaBar1.classList.add("active");
+        } else if (forca === "medium") {
+            senhaBar1.classList.add("active");
+            senhaBar2.classList.add("active");
+        } else if (forca === "strong") {
+            senhaBar1.classList.add("active");
+            senhaBar2.classList.add("active");
+            senhaBar3.classList.add("active");
+        }
 
         // Atualizar confirmação se já houver algo digitado
         const confirmarSenha = confirmarSenhaInput.value;
         if (confirmarSenha !== "") {
-            confirmarSenhaStrengthBar.className = "strength-bar";
+            confirmarBar1.classList.remove("active");
+            confirmarBar2.classList.remove("active");
+            confirmarBar3.classList.remove("active");
             if (this.value === confirmarSenha) {
-                confirmarSenhaStrengthBar.classList.add("strong");
+                confirmarBar1.classList.add("active");
+                confirmarBar2.classList.add("active");
+                confirmarBar3.classList.add("active");
                 confirmarSenhaError.textContent = "";
             } else {
-                confirmarSenhaStrengthBar.classList.add("weak");
+                confirmarBar1.classList.add("active");
                 confirmarSenhaError.textContent = "Senhas não coincidem";
             }
         }
@@ -236,14 +258,19 @@ document.addEventListener("DOMContentLoaded", function() {
     confirmarSenhaInput.addEventListener("input", function() {
         const senha = senhaInput.value;
         const confirmarSenha = this.value;
-        confirmarSenhaStrengthBar.className = "strength-bar"; // Reseta classes
+        confirmarBar1.classList.remove("active");
+        confirmarBar2.classList.remove("active");
+        confirmarBar3.classList.remove("active");
+
         if (senha === "" || confirmarSenha === "") {
             confirmarSenhaError.textContent = "";
         } else if (senha === confirmarSenha) {
-            confirmarSenhaStrengthBar.classList.add("strong"); // Verde se coincidem
+            confirmarBar1.classList.add("active");
+            confirmarBar2.classList.add("active");
+            confirmarBar3.classList.add("active");
             confirmarSenhaError.textContent = "";
         } else {
-            confirmarSenhaStrengthBar.classList.add("weak"); // Vermelho se não coincidem
+            confirmarBar1.classList.add("active");
             confirmarSenhaError.textContent = "Senhas não coincidem";
         }
     });
