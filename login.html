@@ -1,23 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/frontend/src/assets/css/login.css">
     <title>Login - Reservo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="/frontend/src/assets/css/login.css">
 </head>
 <body>
     <div class="login-container">
         <h1>Login</h1>
-        <form id="loginForm">
-            <input type="text" id="username" placeholder="Usuário" required>
-            <input type="password" id="password" placeholder="Senha" required>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username">Usuário:</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" required>
+            </div>
             <button type="submit">Entrar</button>
-            <button type="button" onclick="window.location.href='/index.html'">Voltar</button>
         </form>
-        <p id="errorMessage" style="color: red; display: none;">Usuário ou senha inválidos</p>
+        <div id="error-message"></div>
     </div>
-
-<script src="/frontend/src/assets/js/login.js"></script>
+    <script src="/frontend/src/assets/js/login.js"></script>
 </body>
 </html>
