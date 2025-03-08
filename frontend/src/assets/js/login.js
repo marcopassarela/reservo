@@ -142,23 +142,21 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeEvents();
 });
 
-document.getElementById('login-form').addEventListener('submit', async function (event) {
-    event.preventDefault(); // Evita que a página seja recarregada
-
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
     const username = document.getElementById('username').value;
-    const senha = document.getElementById('senha').value;
+    const password = document.getElementById('password').value;
 
     const response = await fetch('/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, senha })
+        body: JSON.stringify({ username, senha: password })
     });
-
     const data = await response.json();
 
     if (data.success) {
-        window.location.href = data.redirect; // Redireciona para a agenda
+        window.location.href = data.redirect;
     } else {
-        alert(data.message); // Exibe mensagem de erro
+        document.getElementById('error-message').textContent = data.message;
     }
 });
