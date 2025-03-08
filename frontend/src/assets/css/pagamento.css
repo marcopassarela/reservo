@@ -95,6 +95,27 @@ input#numero {
     color: #333;
 }
 
+.strength-bar {
+    height: 5px;
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 2px;
+    margin-top: 5px;
+    transition: background-color 0.3s;
+}
+
+.strength-bar.weak {
+    background-color: #ff4d4d; /* Vermelho para senha fraca */
+}
+
+.strength-bar.medium {
+    background-color: #ffd700; /* Amarelo para senha média */
+}
+
+.strength-bar.strong {
+    background-color: #4CAF50; /* Verde para senha forte */
+}
+
 #finalizar-btn {
     width: 100%;
     padding: 12px;

@@ -74,6 +74,20 @@ function debounce(func, wait) {
     };
 }
 
+// Função para calcular a força da senha
+function calcularForcaSenha(senha) {
+    let forca = 0;
+    if (senha.length > 0) forca += 1; // Tem pelo menos 1 caractere
+    if (senha.length >= 8) forca += 1; // 8 ou mais caracteres
+    if (/[A-Z]/.test(senha)) forca += 1; // Tem maiúscula
+    if (/[0-9]/.test(senha)) forca += 1; // Tem número
+    if (/[^A-Za-z0-9]/.test(senha)) forca += 1; // Tem caractere especial
+
+    if (forca <= 2) return "weak"; // Vermelho
+    if (forca <= 4) return "medium"; // Amarelo
+    return "strong"; // Verde
+}
+
 // Função para finalizar o cadastro/pagamento
 function finalizarFormulario(event) {
     event.preventDefault();
@@ -126,6 +140,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const finalizarBtn = document.getElementById("finalizar-btn");
     const pagamentoOnlyFields = document.querySelectorAll(".pagamento-only");
     const togglePasswordButtons = document.querySelectorAll(".toggle-password");
+    const senhaInput = document.getElementById("senha");
+    const confirmarSenhaInput = document.getElementById("confirmar-senha");
+    const senhaStrengthBar = document.getElementById("senha-strength");
+    const confirmarSenhaStrengthBar = document.getElementById("confirmar-senha-strength");
 
     // Definir o plano selecionado
     if (planoURL && planos[planoURL]) {
@@ -191,6 +209,27 @@ document.addEventListener("DOMContentLoaded", function() {
                 this.textContent = "🙈"; // Macaco com olhos cobertos (senha oculta)
             }
         });
+    });
+
+    // Atualizar força da senha em tempo real
+    senhaInput.addEventListener("input", function() {
+        const forca = calcularForcaSenha(this.value);
+        senhaStrengthBar.className = "strength-bar"; // Reseta classes
+        senhaStrengthBar.classList.add(forca);
+    });
+
+    // Validar confirmação da senha em tempo real
+    confirmarSenhaInput.addEventListener("input", function() {
+        const senha = senhaInput.value;
+        const confirmarSenha = this.value;
+        confirmarSenhaStrengthBar.className = "strength-bar"; // Reseta classes
+        if (senha === "" || confirmarSenha === "") {
+            // Sem cor se algum campo estiver vazio
+        } else if (senha === confirmarSenha) {
+            confirmarSenhaStrengthBar.classList.add("strong"); // Verde se coincidem
+        } else {
+            confirmarSenhaStrengthBar.classList.add("weak"); // Vermelho se não coincidem
+        }
     });
 
     // Finalizar formulário
