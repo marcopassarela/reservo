@@ -178,16 +178,17 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Alternar visibilidade da senha
+    // Alternar visibilidade da senha com macacos
     togglePasswordButtons.forEach(button => {
+        button.textContent = "🙈"; // Inicia com macaco de olhos cobertos
         button.addEventListener("click", function() {
             const targetInput = document.getElementById(this.getAttribute("data-target"));
             if (targetInput.type === "password") {
                 targetInput.type = "text";
-                this.textContent = "👁️"; // Pode mudar o ícone se quiser
+                this.textContent = "🙉"; // Macaco com mãos nas orelhas (senha visível)
             } else {
                 targetInput.type = "password";
-                this.textContent = "👁️";
+                this.textContent = "🙈"; // Macaco com olhos cobertos (senha oculta)
             }
         });
     });
