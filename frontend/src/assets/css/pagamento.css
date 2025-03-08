@@ -105,15 +105,23 @@ input#numero {
 }
 
 .strength-bar.weak {
-    background-color: #ff4d4d; /* Vermelho para senha fraca */
+    background-color: #ff4d4d; /* Vermelho para senha fraca ou não coincidente */
 }
 
 .strength-bar.medium {
-    background-color: #ffd700; /* Amarelo para senha média */
+    background-color: #ffd700; /* Amarelo para senha mediana */
 }
 
 .strength-bar.strong {
-    background-color: #4CAF50; /* Verde para senha forte */
+    background-color: #4CAF50; /* Verde para senha forte ou coincidente */
+}
+
+.error-message {
+    display: block;
+    color: #ff4d4d;
+    font-size: 12px;
+    margin-top: 5px;
+    height: 14px; /* Reserva espaço mesmo quando vazio */
 }
 
 #finalizar-btn {

@@ -144,6 +144,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const confirmarSenhaInput = document.getElementById("confirmar-senha");
     const senhaStrengthBar = document.getElementById("senha-strength");
     const confirmarSenhaStrengthBar = document.getElementById("confirmar-senha-strength");
+    const confirmarSenhaError = document.getElementById("confirmar-senha-error");
 
     // Definir o plano selecionado
     if (planoURL && planos[planoURL]) {
@@ -216,6 +217,19 @@ document.addEventListener("DOMContentLoaded", function() {
         const forca = calcularForcaSenha(this.value);
         senhaStrengthBar.className = "strength-bar"; // Reseta classes
         senhaStrengthBar.classList.add(forca);
+
+        // Atualizar confirmação se já houver algo digitado
+        const confirmarSenha = confirmarSenhaInput.value;
+        if (confirmarSenha !== "") {
+            confirmarSenhaStrengthBar.className = "strength-bar";
+            if (this.value === confirmarSenha) {
+                confirmarSenhaStrengthBar.classList.add("strong");
+                confirmarSenhaError.textContent = "";
+            } else {
+                confirmarSenhaStrengthBar.classList.add("weak");
+                confirmarSenhaError.textContent = "Senhas não coincidem";
+            }
+        }
     });
 
     // Validar confirmação da senha em tempo real
@@ -224,11 +238,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const confirmarSenha = this.value;
         confirmarSenhaStrengthBar.className = "strength-bar"; // Reseta classes
         if (senha === "" || confirmarSenha === "") {
-            // Sem cor se algum campo estiver vazio
+            confirmarSenhaError.textContent = "";
         } else if (senha === confirmarSenha) {
             confirmarSenhaStrengthBar.classList.add("strong"); // Verde se coincidem
+            confirmarSenhaError.textContent = "";
         } else {
             confirmarSenhaStrengthBar.classList.add("weak"); // Vermelho se não coincidem
+            confirmarSenhaError.textContent = "Senhas não coincidem";
         }
     });
 
