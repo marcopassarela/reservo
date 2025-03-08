@@ -361,5 +361,7 @@ header {
         margin-left: 0px;
         margin-top: 50px;
     }
-    
+    .assinar-btn {
+        margin: 100px auto;
+    }
 }
