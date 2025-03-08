@@ -78,13 +78,24 @@ function debounce(func, wait) {
 function finalizarFormulario(event) {
     event.preventDefault();
     const planoSelecionado = obterParametroURL("plano") || "free";
+    const senha = document.getElementById("senha").value;
+    const confirmarSenha = document.getElementById("confirmar-senha").value;
+
+    // Validar se as senhas coincidem
+    if (senha !== confirmarSenha) {
+        alert("As senhas não coincidem! Por favor, verifique.");
+        return;
+    }
+
     const dados = {
-        nome: document.getElementById("nome").value,
-        email: document.getElementById("email").value,
-        telefone: document.getElementById("telefone").value
+        username: document.getElementById("username").value,
+        senha: senha,
+        email: document.getElementById("email").value
     };
 
     if (planoSelecionado !== "free") {
+        dados.nome = document.getElementById("nome").value;
+        dados.telefone = document.getElementById("telefone").value;
         dados.cpf = document.getElementById("cpf").value;
         dados.cep = document.getElementById("cep").value;
         dados.cidade = document.getElementById("cidade").value;
@@ -129,20 +140,20 @@ document.addEventListener("DOMContentLoaded", function() {
         formTitle.textContent = "Dados para Cadastro";
         finalizarBtn.textContent = "Concluir Cadastro";
         pagamentoOnlyFields.forEach(field => {
-            field.style.display = "none"; // Oculta campos de pagamento
-            field.querySelector("input").required = false; // Remove obrigatoriedade
+            field.style.display = "none";
+            field.querySelector("input").required = false;
         });
     } else {
         formTitle.textContent = "Dados para Pagamento";
         finalizarBtn.textContent = "Finalizar Pagamento";
         pagamentoOnlyFields.forEach(field => {
-            field.style.display = "block"; // Mostra campos de pagamento
-            field.querySelector("input").required = true; // Torna obrigatório
+            field.style.display = "block";
+            field.querySelector("input").required = true;
         });
     }
 
-    // Máscara de CEP em tempo real
-    if (cepInput) {
+    // Máscara de CEP em tempo real (apenas para planos pagos)
+    if (cepInput && planoURL !== "free") {
         cepInput.addEventListener("input", function() {
             this.value = mascararCEP(this.value);
         });
@@ -152,15 +163,15 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Máscara de CPF em tempo real
-    if (cpfInput) {
+    // Máscara de CPF em tempo real (apenas para planos pagos)
+    if (cpfInput && planoURL !== "free") {
         cpfInput.addEventListener("input", function() {
             this.value = mascararCPF(this.value);
         });
     }
 
-    // Limitar número a 4 dígitos
-    if (numeroInput) {
+    // Limitar número a 4 dígitos (apenas para planos pagos)
+    if (numeroInput && planoURL !== "free") {
         numeroInput.addEventListener("input", function() {
             this.value = this.value.replace(/\D/g, "").slice(0, 4);
         });
