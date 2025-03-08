@@ -219,36 +219,36 @@ document.addEventListener("DOMContentLoaded", function() {
     // Atualizar força da senha em tempo real
     senhaInput.addEventListener("input", function() {
         const forca = calcularForcaSenha(this.value);
-        senhaBar1.classList.remove("active");
-        senhaBar2.classList.remove("active");
-        senhaBar3.classList.remove("active");
+        senhaBar1.classList.remove("red");
+        senhaBar2.classList.remove("yellow");
+        senhaBar3.classList.remove("green");
 
         if (this.value === "") {
             // Sem cor se vazio
         } else if (forca === "weak") {
-            senhaBar1.classList.add("active");
+            senhaBar1.classList.add("red");
         } else if (forca === "medium") {
-            senhaBar1.classList.add("active");
-            senhaBar2.classList.add("active");
+            senhaBar1.classList.add("red");
+            senhaBar2.classList.add("yellow");
         } else if (forca === "strong") {
-            senhaBar1.classList.add("active");
-            senhaBar2.classList.add("active");
-            senhaBar3.classList.add("active");
+            senhaBar1.classList.add("red");
+            senhaBar2.classList.add("yellow");
+            senhaBar3.classList.add("green");
         }
 
         // Atualizar confirmação se já houver algo digitado
         const confirmarSenha = confirmarSenhaInput.value;
         if (confirmarSenha !== "") {
-            confirmarBar1.classList.remove("active");
-            confirmarBar2.classList.remove("active");
-            confirmarBar3.classList.remove("active");
+            confirmarBar1.classList.remove("red");
+            confirmarBar2.classList.remove("yellow");
+            confirmarBar3.classList.remove("green");
             if (this.value === confirmarSenha) {
-                confirmarBar1.classList.add("active");
-                confirmarBar2.classList.add("active");
-                confirmarBar3.classList.add("active");
+                confirmarBar1.classList.add("red");
+                confirmarBar2.classList.add("yellow");
+                confirmarBar3.classList.add("green");
                 confirmarSenhaError.textContent = "";
             } else {
-                confirmarBar1.classList.add("active");
+                confirmarBar1.classList.add("red");
                 confirmarSenhaError.textContent = "Senhas não coincidem";
             }
         }
@@ -258,19 +258,19 @@ document.addEventListener("DOMContentLoaded", function() {
     confirmarSenhaInput.addEventListener("input", function() {
         const senha = senhaInput.value;
         const confirmarSenha = this.value;
-        confirmarBar1.classList.remove("active");
-        confirmarBar2.classList.remove("active");
-        confirmarBar3.classList.remove("active");
+        confirmarBar1.classList.remove("red");
+        confirmarBar2.classList.remove("yellow");
+        confirmarBar3.classList.remove("green");
 
         if (senha === "" || confirmarSenha === "") {
             confirmarSenhaError.textContent = "";
         } else if (senha === confirmarSenha) {
-            confirmarBar1.classList.add("active");
-            confirmarBar2.classList.add("active");
-            confirmarBar3.classList.add("active");
+            confirmarBar1.classList.add("red");
+            confirmarBar2.classList.add("yellow");
+            confirmarBar3.classList.add("green");
             confirmarSenhaError.textContent = "";
         } else {
-            confirmarBar1.classList.add("active");
+            confirmarBar1.classList.add("red");
             confirmarSenhaError.textContent = "Senhas não coincidem";
         }
     });

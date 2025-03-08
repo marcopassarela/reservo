@@ -104,20 +104,20 @@ input#numero {
 .strength-bar {
     height: 5px;
     width: 33%; /* Cada barra ocupa 1/3 do espaço disponível */
-    background-color: #e0e0e0;
+    background-color: #e0e0e0; /* Cinza por padrão */
     border-radius: 2px;
     transition: background-color 0.3s;
 }
 
-#senha-bar1, #confirmar-bar1.active {
+.strength-bar.red {
     background-color: #ff4d4d; /* Vermelho */
 }
 
-#senha-bar2, #confirmar-bar2.active {
+.strength-bar.yellow {
     background-color: #ffd700; /* Amarelo */
 }
 
-#senha-bar3, #confirmar-bar3.active {
+.strength-bar.green {
     background-color: #4CAF50; /* Verde */
 }
 
