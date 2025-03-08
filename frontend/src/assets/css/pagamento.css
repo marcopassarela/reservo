@@ -144,3 +144,22 @@ input#numero {
 #finalizar-btn:hover {
     background-color: #444;
 }
+
+#voltar-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #f0f0f0;
+    color: #5f6368;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#voltar-btn:hover {
+    background-color: #e0e0e0;
+}
