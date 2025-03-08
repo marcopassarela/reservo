@@ -125,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const formTitle = document.getElementById("form-title");
     const finalizarBtn = document.getElementById("finalizar-btn");
     const pagamentoOnlyFields = document.querySelectorAll(".pagamento-only");
+    const togglePasswordButtons = document.querySelectorAll(".toggle-password");
 
     // Definir o plano selecionado
     if (planoURL && planos[planoURL]) {
@@ -176,6 +177,20 @@ document.addEventListener("DOMContentLoaded", function() {
             this.value = this.value.replace(/\D/g, "").slice(0, 4);
         });
     }
+
+    // Alternar visibilidade da senha
+    togglePasswordButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const targetInput = document.getElementById(this.getAttribute("data-target"));
+            if (targetInput.type === "password") {
+                targetInput.type = "text";
+                this.textContent = "👁️"; // Pode mudar o ícone se quiser
+            } else {
+                targetInput.type = "password";
+                this.textContent = "👁️";
+            }
+        });
+    });
 
     // Finalizar formulário
     document.getElementById("pagamento-form").addEventListener("submit", finalizarFormulario);

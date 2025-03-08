@@ -54,12 +54,12 @@ input[readonly] {
 }
 
 input#cep, input#cpf {
-    font-family: monospace; /* Para alinhar números e formatação */
+    font-family: monospace;
 }
 
 input#numero {
-    font-family: monospace; /* Para consistência visual */
-    max-width: 100px; /* Limita a largura para refletir o tamanho máximo */
+    font-family: monospace;
+    max-width: 100px;
 }
 
 .form-group {
@@ -70,6 +70,29 @@ input#numero {
     display: block;
     color: #5f6368;
     font-weight: 500;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 40px; /* Espaço para o ícone */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #5f6368;
+    user-select: none;
+}
+
+.toggle-password:hover {
+    color: #333;
 }
 
 #finalizar-btn {
