@@ -154,10 +154,12 @@ input#numero {
     color: #5f6368;
     text-align: center;
     text-decoration: none;
+    border: none; /* Igual ao #finalizar-btn */
     border-radius: 4px;
     margin-top: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
+    box-sizing: border-box; /* Garante que o padding não aumente o tamanho */
 }
 
 #voltar-btn:hover {
