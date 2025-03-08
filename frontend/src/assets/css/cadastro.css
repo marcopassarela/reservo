@@ -305,6 +305,28 @@ header {
 }
 
 
+.assinar-btn {
+    display: block; /* Faz o botão ocupar a linha inteira */
+    margin: 130px auto; /* Aumenta o espaço superior para 40px (ou mais, se quiser) */
+    padding: 10px 20px; /* Altura e largura interna do botão */
+    background-color: #007bff; /* Cor de fundo (exemplo: azul) */
+    color: #ffffff; /* Cor do texto */
+    text-align: center; /* Centraliza o texto dentro do botão */
+    text-decoration: none; /* Remove sublinhado se for um link */
+    border: none; /* Remove borda padrão */
+    border-radius: 5px; /* Bordas arredondadas */
+    font-size: 14px; /* Tamanho da fonte */
+    cursor: pointer; /* Mãozinha ao passar o mouse */
+    width: 50%; /* Largura do botão (ajustável) */
+    max-width: 200px; /* Largura máxima para não ficar muito grande */
+    font-family: "Poppins", serif;
+}
+
+.assinar-btn:hover {
+    background-color: #0056b3; /* Cor ao passar o mouse */
+    transition: background-color 0.3s ease; /* Transição suave */
+}
+
 
 
 
