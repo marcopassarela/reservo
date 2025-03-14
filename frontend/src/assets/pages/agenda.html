@@ -8,8 +8,19 @@
     <link rel="stylesheet" href="/frontend/src/assets/css/agenda.css">
 </head>
 <body>
-    <h1>Agenda</h1>
-    <p>Bem-vindo à sua agenda! Esta página é protegida.</p>
-    <a href="/logout" id="logout-btn">Sair</a>
+    <!-- Header -->
+    <header>
+        <h1>Agenda</h1>
+        <div class="avatar-container" id="avatarContainer">
+            <img src="default-avatar.png" alt="Avatar" class="avatar" id="avatar">
+            <input type="file" id="upload" accept="image/*" hidden>
+            <button id="remove" class="hidden">🗑️</button>
+        </div>
+        <span id="userNameDisplay"></span>
+    </header>
+
+
+
+<script src="/frontend/src/assets/js/agendamento.js"></script>
 </body>
 </html>
